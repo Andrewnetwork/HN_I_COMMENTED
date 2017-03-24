@@ -1,2 +1,4 @@
 
-<center><img src="APP_FLAVOR.png" /></center>
+<div style="text-align:center">
+    <img src="APP_FLAVOR.png" />
+</div>
