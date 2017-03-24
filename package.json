@@ -22,8 +22,7 @@
   },
   "homepage": "https://github.com/Andrewnetwork/HN_I_COMMENTED#readme",
   "dependencies": {
-    "express"    : "latest",
-    "request"    : "latest",
-    "cheerio"    : "latest"
+    "cheerio": "latest",
+    "request": "latest"
   }
 }
