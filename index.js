@@ -1,19 +1,17 @@
-var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
-var hcom    = require("./HNCOMM.js");
+var Slack   = require('slack-node');
 
+//####### GLOBALS ##########
+var app         = express();
 var newsRootURL = "https://news.ycombinator.com"
 var currLinks   = [];
 var url         = 'https://news.ycombinator.com/threads?id=BucketSort';
 var beatMS      = 50000;
+var webHookAddr = "https://hooks.slack.com/services/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";
+//###### END GLOBALS ##########
 
-var a = new hcom.HNCOMM(2,3);
-
-// The structure of our request call
-// The first parameter is our URL
-// The callback function takes 3 parameters, an error, response status code and the html
-
+// On load call. Gets current state of comments. 
 request(url, function(error, response, html){
 
     // First we'll check to make sure no errors occurred when making the request
@@ -44,6 +42,7 @@ request(url, function(error, response, html){
     }
 })
 
+// Called every beatMS, this function checks if we have a new comment and updates the current link array if there is after posting to slack. 
 function heartBeat(){
     request(url, function(error, response, html){
         // First we'll check to make sure no errors occurred when making the request
@@ -74,7 +73,9 @@ function heartBeat(){
                 console.log(currLinks[0] + "   "+ linkAr[0])
                 if(currLinks[0] != linkAr[0]){
                     console.log("New link: "+linkAr[0]);
-                    
+                    getTitleAndPost(linkAr[0]);
+                    var txt = getTitle(linkAr[0])+" - "+linkAr[0];
+                    postToSlack(txt)
                     currLinks = linkAr;
                 }
                 else
@@ -83,6 +84,34 @@ function heartBeat(){
                 }
             }
         })
-    }
+}
+
+// Get's the title of the link address and posts it to slack with the link. 
+function getTitleAndPost(linkAddr){
+    url = linkAddr;
+
+    var a = request(url, function(error, response, html){
+        if(!error){
+            var $      = cheerio.load(html);
+            var title = $('.storylink')[0]["children"][0].data;
+            postToSlack(title+" - "+linkAddr);
+        }
+    })
+}
+
+function postToSlack(txt){
+   slack = new Slack();
+   slack.setWebhook(webHookAddr);
+   slack.webhook({
+        channel: "#general",
+        username: "HN_I_COMMENTED",
+        text: txt
+        }, function(err, response) {
+        console.log("Sent to slack.");
+    });
+}
+
+//getTitleAndPost("https://news.ycombinator.com/item?id=13945492");
+//postToSlack("https://news.ycombinator.com/item?id=13946258");
 
 setInterval(heartBeat,beatMS);
