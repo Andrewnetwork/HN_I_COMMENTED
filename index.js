@@ -3,7 +3,6 @@ var cheerio = require('cheerio');
 var Slack   = require('slack-node');
 
 //####### GLOBALS ##########
-var app         = express();
 var newsRootURL = "https://news.ycombinator.com"
 var currLinks   = [];
 var url         = 'https://news.ycombinator.com/threads?id=BucketSort';
@@ -94,7 +93,9 @@ function getTitleAndPost(linkAddr){
         if(!error){
             var $      = cheerio.load(html);
             var title = $('.storylink')[0]["children"][0].data;
-            postToSlack(title+" - "+linkAddr);
+            var storyLink = $('.storylink')[0].attribs["href"]
+            
+            postToSlack(title+" - "+storyLink+" - "+linkAddr);
         }
     })
 }
@@ -111,7 +112,7 @@ function postToSlack(txt){
     });
 }
 
-//getTitleAndPost("https://news.ycombinator.com/item?id=13945492");
+getTitleAndPost("https://news.ycombinator.com/item?id=13945492");
 //postToSlack("https://news.ycombinator.com/item?id=13946258");
 
-setInterval(heartBeat,beatMS);
+//setInterval(heartBeat,beatMS);
