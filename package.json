@@ -1,0 +1,29 @@
+{
+  "name": "hn_i_commented",
+  "version": "1.0.0",
+  "description": "Posts a links to a Hacker News articles that are commented on by a particular memb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andrewnetwork/HN_I_COMMENTED.git"
+  },
+  "keywords": [
+    "Hacker",
+    "News",
+    "Slack"
+  ],
+  "author": "Andrew Ribeiro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Andrewnetwork/HN_I_COMMENTED/issues"
+  },
+  "homepage": "https://github.com/Andrewnetwork/HN_I_COMMENTED#readme",
+  "dependencies": {
+    "express"    : "latest",
+    "request"    : "latest",
+    "cheerio"    : "latest"
+  }
+}
