@@ -1,7 +1,7 @@
 {
   "name": "hn_i_commented",
   "version": "1.0.0",
-  "description": "Posts a links to a Hacker News articles that are commented on by a particular memb",
+  "description": "Posts links to Hacker News articles that are commented on by a particular memb",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
