@@ -112,7 +112,7 @@ function postToSlack(txt){
     });
 }
 
-getTitleAndPost("https://news.ycombinator.com/item?id=13945492");
+//getTitleAndPost("https://news.ycombinator.com/item?id=13945492");
 //postToSlack("https://news.ycombinator.com/item?id=13946258");
 
-//setInterval(heartBeat,beatMS);
+setInterval(heartBeat,beatMS);
